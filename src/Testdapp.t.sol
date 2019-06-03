@@ -1,21 +1,15 @@
 pragma solidity ^0.5.6;
-
 import "ds-test/test.sol";
-
 import "./Testdapp.sol";
 
-contract TestdappTest is DSTest {
-    Testdapp testdapp;
+contract ParentTest is DSTest {
+  Parent parent;
+  function setUp() public {
+    parent = new Parent();
+  }
 
-    function setUp() public {
-        testdapp = new Testdapp();
-    }
-
-    function testFail_basic_sanity() public {
-        assertTrue(false);
-    }
-
-    function test_basic_sanity() public {
-        assertTrue(true);
-    }
+  function testString() public {
+    assertEq(keccak256(abi.encodePacked(parent.getChildString())), keccak256(abi.encodePacked("Hello")));
+    assertEq0(bytes(parent.getChildString()), bytes("Hello"));
+  }
 }
